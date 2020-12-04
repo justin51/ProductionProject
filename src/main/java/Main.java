@@ -4,22 +4,37 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
+/**
+ * Main class to start the application
+ *
+ * @author Justin Kenney
+ */
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  /**
+   * Main method that starts program execution
+   *
+   * @param args starting arguments
+   */
+  public static void main(String[] args) {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    launch(args);
+  }
 
-        Scene scene = new Scene(root, 600, 275);
+  /**
+   * The method required for starting an FXML application
+   *
+   * @param primaryStage
+   * @throws Exception
+   */
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-        primaryStage.setTitle("Production Project");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+    Scene scene = new Scene(root, 480, 275);
+
+    primaryStage.setTitle("Production Project");
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
 }
