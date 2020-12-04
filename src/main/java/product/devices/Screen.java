@@ -21,9 +21,9 @@ public class Screen implements ScreenSpec {
   /**
    * Constructor to create a Screen object
    *
-   * @param resolution
-   * @param refreshrate
-   * @param responsetime
+   * @param resolution screen resolution
+   * @param refreshrate screen refresh rate
+   * @param responsetime screen response time
    */
   public Screen(String resolution, int refreshrate, int responsetime) {
     this.resolution = resolution;

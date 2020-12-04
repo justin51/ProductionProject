@@ -76,7 +76,7 @@ public class Employee {
   /**
    * This will create and set a username for this employee based on their full name
    *
-   * @param name
+   * @param name employee username
    */
   public void setUsername(String name) {
     String[] names = name.split(" ");

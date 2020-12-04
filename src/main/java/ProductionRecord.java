@@ -90,7 +90,7 @@ public class ProductionRecord {
   /**
    * sets the production number
    *
-   * @param productionNumber
+   * @param productionNumber how many units were produced before this
    */
   public void setProductionNum(int productionNumber) {
     this.productionNumber = productionNumber;
@@ -117,7 +117,7 @@ public class ProductionRecord {
   /**
    * gets the serial number
    *
-   * @return
+   * @return product serial number
    */
   public String getSerialNum() {
     return serialNumber;
@@ -144,7 +144,7 @@ public class ProductionRecord {
   /**
    * Sets the production date
    *
-   * @param dateProduced
+   * @param dateProduced date of production
    */
   public void setProdDate(Date dateProduced) {
     this.dateProduced = new Date(dateProduced.getTime());

@@ -24,8 +24,8 @@ public class Main extends Application {
   /**
    * The method required for starting an FXML application
    *
-   * @param primaryStage
-   * @throws Exception
+   * @param primaryStage the stage to start at
+   * @throws Exception if fxml class is not found
    */
   @Override
   public void start(Stage primaryStage) throws Exception {

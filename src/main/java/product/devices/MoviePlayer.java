@@ -19,10 +19,10 @@ public class MoviePlayer extends Product implements MultimediaControl {
   /**
    * Constructor for a MoviePlayer
    *
-   * @param name
-   * @param manufacturer
-   * @param screen
-   * @param monitorType
+   * @param name movie players name
+   * @param manufacturer manufacturer of movie player
+   * @param screen screen the movie player uses
+   * @param monitorType the monitor type of the movie player
    */
   public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
     super(name, manufacturer, product.ItemType.VISUAL);
