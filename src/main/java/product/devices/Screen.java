@@ -6,23 +6,23 @@ package product.devices;
 public class Screen implements ScreenSpec {
 
   /**
-   * the resolution of this screen
+   * the resolution of this screen.
    */
   private String resolution;
   /**
-   * the refresh rate of this screen
+   * the refresh rate of this screen.
    */
   private int refreshrate;
   /**
-   * the response time of this screen
+   * the response time of this screen.
    */
   private int responsetime;
 
   /**
-   * Constructor to create a Screen object
+   * Constructor to create a Screen object.
    *
-   * @param resolution screen resolution
-   * @param refreshrate screen refresh rate
+   * @param resolution   screen resolution
+   * @param refreshrate  screen refresh rate
    * @param responsetime screen response time
    */
   public Screen(String resolution, int refreshrate, int responsetime) {
@@ -38,7 +38,7 @@ public class Screen implements ScreenSpec {
   }
 
   /**
-   * gets the resolution
+   * gets the resolution.
    *
    * @return this screens resolution
    */
@@ -48,7 +48,7 @@ public class Screen implements ScreenSpec {
   }
 
   /**
-   * get the refresh rate
+   * get the refresh rate.
    *
    * @return the refresh rate of this screen
    */
@@ -58,7 +58,7 @@ public class Screen implements ScreenSpec {
   }
 
   /**
-   * gets the response time
+   * gets the response time.
    *
    * @return this screens response time
    */

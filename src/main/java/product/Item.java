@@ -1,7 +1,7 @@
 package product;
 
 /**
- * An interface used for Product
+ * An interface used for Product.
  *
  * @author Justin Kenney
  */

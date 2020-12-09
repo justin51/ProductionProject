@@ -2,31 +2,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class that contains the information of an employee
+ * Class that contains the information of an employee.
  *
  * @author Justin Kenney
  */
 public class Employee {
 
   /**
-   * The name of this employee
+   * The name of this employee.
    */
   private String name;
   /**
-   * This employees username
+   * This employees username.
    */
   private String username;
   /**
-   * This employees password
+   * This employees password.
    */
   private String password;
   /**
-   * This employees email
+   * This employees email.
    */
   private String email;
 
   /**
-   * Constructor to create an Employee object
+   * Constructor to create an Employee object.
    *
    * @param name     employees name
    * @param username employees username
@@ -64,7 +64,7 @@ public class Employee {
   }
 
   /**
-   * This will create and set an email address for the employee based on their full name
+   * This will create and set an email address for the employee based on their full name.
    *
    * @param name employees full name
    */
@@ -74,7 +74,7 @@ public class Employee {
   }
 
   /**
-   * This will create and set a username for this employee based on their full name
+   * This will create and set a username for this employee based on their full name.
    *
    * @param name employee username
    */
@@ -84,7 +84,7 @@ public class Employee {
   }
 
   /**
-   * Checks if the name contains spaces
+   * Checks if the name contains spaces.
    *
    * @param name full name of the employee
    * @return true if name contains a space
@@ -117,7 +117,7 @@ public class Employee {
   }
 
   /**
-   * converts the employees data into a string of text
+   * converts the employees data into a string of text.
    *
    * @return string of employee data
    */
@@ -128,7 +128,7 @@ public class Employee {
   }
 
   /**
-   * gets the employees name
+   * gets the employees name.
    *
    * @return employee name
    */
@@ -137,7 +137,7 @@ public class Employee {
   }
 
   /**
-   * gets the employees username
+   * gets the employees username.
    *
    * @return employee username
    */
@@ -146,7 +146,7 @@ public class Employee {
   }
 
   /**
-   * gets the employees password
+   * gets the employees password.
    *
    * @return employee password
    */
@@ -155,7 +155,7 @@ public class Employee {
   }
 
   /**
-   * gets the employees email
+   * gets the employees email.
    *
    * @return employee email
    */

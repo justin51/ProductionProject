@@ -5,14 +5,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Main class to start the application
+ * Main class to start the application.
  *
  * @author Justin Kenney
  */
 public class Main extends Application {
 
   /**
-   * Main method that starts program execution
+   * Main method that starts program execution.
    *
    * @param args starting arguments
    */
@@ -22,7 +22,7 @@ public class Main extends Application {
   }
 
   /**
-   * The method required for starting an FXML application
+   * The method required for starting an FXML application.
    *
    * @param primaryStage the stage to start at
    * @throws Exception if fxml class is not found

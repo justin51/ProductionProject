@@ -2,31 +2,31 @@ import java.util.Date;
 import product.Product;
 
 /**
- * A class to hold the data related to a ProductionRecord
+ * A class to hold the data related to a ProductionRecord.
  *
  * @author Justin Kenney
  */
 public class ProductionRecord {
 
   /**
-   * the produced products production number
+   * the produced products production number.
    */
   private int productionNumber;
   /**
-   * the products id
+   * the products id.
    */
   private int productId;
   /**
-   * the produced products serial number
+   * the produced products serial number.
    */
   private String serialNumber;
   /**
-   * the date of production
+   * the date of production.
    */
   private Date dateProduced;
 
   /**
-   * Constructor for creating a ProductionRecord object using a products id
+   * Constructor for creating a ProductionRecord object using a products id.
    *
    * @param productId product id
    */
@@ -38,7 +38,7 @@ public class ProductionRecord {
   }
 
   /**
-   * Constructor for creating a ProductionRecord object
+   * Constructor for creating a ProductionRecord object.
    *
    * @param productionNumber products production number
    * @param productId        products id
@@ -54,7 +54,7 @@ public class ProductionRecord {
   }
 
   /**
-   * Constructor for creating a ProductionRecord object
+   * Constructor for creating a ProductionRecord object.
    *
    * @param product the product that was produced
    * @param count   the amount produced
@@ -68,7 +68,7 @@ public class ProductionRecord {
   }
 
   /**
-   * Converts the properties of the ProductionRecord into a string of text
+   * Converts the properties of the ProductionRecord into a string of text.
    *
    * @return string of text representing the ProductionRecord
    */
@@ -79,7 +79,7 @@ public class ProductionRecord {
   }
 
   /**
-   * gets the production number
+   * gets the production number.
    *
    * @return production number
    */
@@ -88,7 +88,7 @@ public class ProductionRecord {
   }
 
   /**
-   * sets the production number
+   * sets the production number.
    *
    * @param productionNumber how many units were produced before this
    */
@@ -97,25 +97,25 @@ public class ProductionRecord {
   }
 
   /**
-   * gets the product id
+   * gets the product id.
    *
    * @return product id
    */
-  public int getProductID() {
+  public int getProductId() {
     return productId;
   }
 
   /**
-   * sets the products id
+   * sets the products id.
    *
    * @param productId product id
    */
-  public void setProductID(int productId) {
+  public void setProductId(int productId) {
     this.productId = productId;
   }
 
   /**
-   * gets the serial number
+   * gets the serial number.
    *
    * @return product serial number
    */
@@ -124,7 +124,7 @@ public class ProductionRecord {
   }
 
   /**
-   * sets the product serial number
+   * sets the product serial number.
    *
    * @param serialNumber product serial number
    */
@@ -133,7 +133,7 @@ public class ProductionRecord {
   }
 
   /**
-   * gets the production date
+   * gets the production date.
    *
    * @return production date
    */
@@ -142,7 +142,7 @@ public class ProductionRecord {
   }
 
   /**
-   * Sets the production date
+   * Sets the production date.
    *
    * @param dateProduced date of production
    */

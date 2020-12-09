@@ -8,21 +8,21 @@ import product.Product;
 public class MoviePlayer extends Product implements MultimediaControl {
 
   /**
-   * The screen for this movie player
+   * The screen for this movie player.
    */
   private Screen screen;
   /**
-   * the monitor type of this movie player
+   * the monitor type of this movie player.
    */
   private MonitorType monitorType;
 
   /**
-   * Constructor for a MoviePlayer
+   * Constructor for a MoviePlayer.
    *
-   * @param name movie players name
+   * @param name         movie players name
    * @param manufacturer manufacturer of movie player
-   * @param screen screen the movie player uses
-   * @param monitorType the monitor type of the movie player
+   * @param screen       screen the movie player uses
+   * @param monitorType  the monitor type of the movie player
    */
   public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
     super(name, manufacturer, product.ItemType.VISUAL);

@@ -1,24 +1,37 @@
-import org.h2.jdbc.JdbcSQLSyntaxErrorException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.util.Pair;
+import product.ItemType;
+import product.Product;
 import product.devices.AudioPlayer;
 import product.devices.MonitorType;
 import product.devices.MoviePlayer;
 import product.devices.MultimediaControl;
 import product.devices.Screen;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
-import javafx.util.Pair;
-
-import java.io.*;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import product.ItemType;
-import product.Product;
 import product.devices.Widget;
 
 /**
@@ -29,7 +42,7 @@ import product.devices.Widget;
 public class Controller {
 
   /**
-   * A list of available products to be displayed on the Product and Produce Tabs of the GUI
+   * A list of available products to be displayed on the Product and Produce Tabs of the GUI.
    */
   private final ObservableList<Product> productLine = FXCollections.observableArrayList();
 
@@ -95,31 +108,34 @@ public class Controller {
 
   /**
    * A list containing the available ProductionRecords to be displayed in the Production Log Tab of
-   * the GUI
+   * the GUI.
    */
   private ArrayList<ProductionRecord> productionLog;
 
   /**
-   * A list of available Employees
+   * A list of available Employees.
    */
   private ArrayList<Employee> employees;
 
   /**
-   * The Employee currently logged in. null if there is not a current user
+   * The Employee currently logged in. null if there is not a current user.
    */
   private Employee currentEmployee;
 
   /**
-   * Database object used to access the ProductionDB
+   * Database object used to access the ProductionDB.
    */
-  private Database productionDB;
+  private Database productionDb;
 
+  /**
+   * Used to initialize the program.
+   */
   @FXML
   public void initialize() {
     // create a Database object that connects to the ProductionDB
-    productionDB = new Database("org.h2.Driver", "jdbc:h2:./resources/ProductionDB");
+    productionDb = new Database("org.h2.Driver", "jdbc:h2:./resources/ProductionDB");
 
-    // Adds a list of strings (from the ProductTypes enum values) to the choice box on the product tab
+    // Adds a list of strings (ProductTypes enum values) to the choice box on the product tab
     List<String> types = ItemType.stream().map(ItemType::name).sorted()
         .collect(Collectors.toList());
     cbType.getItems().addAll(types);
@@ -127,7 +143,7 @@ public class Controller {
     // Adds a list of integers (1-10 inclusive) to the combo box on the produce tab
     cbQuantity.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
-    // Allow users to add custom quantity values & select the first CB option to act as the default value
+    // Allow users to add custom values & select the first CB option to act as the default value
     cbQuantity.setEditable(true);
     cbQuantity.getSelectionModel().selectFirst();
 
@@ -150,11 +166,11 @@ public class Controller {
     // Loads the Employees from EmployeeData.txt into the list
     this.loadEmployees();
 
-//    testMultimedia();
+    // testMultimedia();
   }
 
   /**
-   * Stores all of the Employees into EmployeeData.txt
+   * Stores all of the Employees into EmployeeData.txt.
    */
   public void saveEmployees() {
     try {
@@ -225,7 +241,7 @@ public class Controller {
   }
 
   /**
-   * Search the list of products to find one with the provided id
+   * Search the list of products to find one with the provided id.
    *
    * @param id the products id
    * @return The name of the product. "N/A" if one is not found
@@ -240,7 +256,7 @@ public class Controller {
   }
 
   /**
-   * Recursively reverse the provided string
+   * Recursively reverse the provided string.
    *
    * @param string The string to be reversed
    * @return A string in reverse order of the one provided
@@ -253,7 +269,7 @@ public class Controller {
   }
 
   /**
-   * This will update the Production Log Tab to display all of the ProductionRecords
+   * This will update the Production Log Tab to display all of the ProductionRecords.
    */
   void showProduction() {
     // clears the current production log
@@ -264,13 +280,13 @@ public class Controller {
       this.productionView.appendText(
           "Prod. Num: " + record.getProductionNum() + " product.Product Name: "
               + getProductNameById(
-              record.getProductID()) + " Serial Num: " + record.getSerialNum() + " Date: " + record
+              record.getProductId()) + " Serial Num: " + record.getSerialNum() + " Date: " + record
               .getProdDate() + "\n");
     }
   }
 
   /**
-   * Loads ProductionRecords from the Database into the productionLog list
+   * Loads ProductionRecords from the Database into the productionLog list.
    */
   void loadProductionLog() {
     this.productionLog = new ArrayList<>();
@@ -279,14 +295,16 @@ public class Controller {
     ResultSet productionSet;
 
     try {
-      productionSet = productionDB.getResultSet("SELECT * FROM Productionrecord");
+      productionSet = productionDb.getResultSet("SELECT * FROM Productionrecord");
     } catch (SQLException e) {
       System.out.println("Creating ProductionRecord table");
-      this.productionDB.executeSQLStatement("create table PRODUCTIONRECORD(production_num int auto_increment, product_id int, serial_num varchar, date_produced datetime)");
+      this.productionDb.executeSqlStatement(
+          "create table PRODUCTIONRECORD(production_num int auto_increment, "
+              + "product_id int, serial_num varchar, date_produced datetime)");
       return;
     }
 
-    if(productionSet == null) {
+    if (productionSet == null) {
       System.out.println("productionset is null?");
       return;
     }
@@ -302,7 +320,7 @@ public class Controller {
         ProductionRecord record = new ProductionRecord(productionNum, productId, serialNum, date);
         this.productionLog.add(record);
       }
-    }catch (SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       // update production log
@@ -310,28 +328,32 @@ public class Controller {
 
       // todo I think this can be handled in Database. I need to use cached result set?
       // close the connection to the database
-      productionDB.closeConnection();
+      productionDb.closeConnection();
     }
   }
 
   /**
-   * Loads Products from the Database into the productLine list
+   * Loads Products from the Database into the productLine list.
    */
   private void loadProductList() {
 
     ResultSet productSet;
 
     try {
-      productSet = productionDB.getResultSet("SELECT * FROM Product");
+      productSet = productionDb.getResultSet("SELECT * FROM Product");
     } catch (SQLException e) {
       System.out.println("Creating Product table");
-      this.productionDB.executeSQLStatement("create table PRODUCT(id int auto_increment, name varchar, type varchar, manufacturer varchar)");
-      this.productionDB.executeSQLStatement("create unique index Product_id_uindex on Product (id)");
-      this.productionDB.executeSQLStatement("alter table Product add constraint Product_pk primary key (id)");
+      this.productionDb.executeSqlStatement(
+          "create table PRODUCT(id int auto_increment,"
+              + "name varchar, type varchar, manufacturer varchar)");
+      this.productionDb.executeSqlStatement(
+          "create unique index Product_id_uindex on Product (id)");
+      this.productionDb.executeSqlStatement(
+          "alter table Product add constraint Product_pk primary key (id)");
       return;
     }
 
-    if(productSet == null) {
+    if (productSet == null) {
       System.out.println("product set is null?");
       return;
     }
@@ -346,16 +368,16 @@ public class Controller {
         // Create a Widget object to store the product data and add it to the list
         productLine.add(new Widget(name, mfr, ItemType.forName(type), id));
       }
-    }catch (SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       // close the database connection
-      productionDB.closeConnection();
+      productionDb.closeConnection();
     }
   }
 
   /**
-   * Sets up the table displayed on the Product tab
+   * Sets up the table displayed on the Product tab.
    */
   private void setupProductLineTable() {
     nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -390,13 +412,13 @@ public class Controller {
     productLine.add(widget);
 
     // adds the product to the database
-    productionDB.addToProductDB(type, name, mfr);
+    productionDb.addToProductDb(type, name, mfr);
   }
 
   /**
    * This will create a traceable audit of the Production Log by saving ProductionRecord and the
    * Employee responsible for producing it. Each production run of a product is saved to
-   * ProductionAudit.txt
+   * ProductionAudit.txt.
    *
    * @param product  The Product that was produced
    * @param quantity The amount produced
@@ -416,7 +438,7 @@ public class Controller {
 
   /**
    * Creates ProductionRecords for the selected product and quantity. the records will be added to
-   * the database and the list, and the audit log will be updated
+   * the database and the list, and the audit log will be updated.
    */
   @FXML
   private void recordProduction() {
@@ -447,7 +469,7 @@ public class Controller {
       ProductionRecord record = new ProductionRecord(product, i);
       productionRun.add(record);
     }
-    productionDB.addToProductionDB(productionRun);
+    productionDb.addToProductionDb(productionRun);
     productionLog.addAll(productionRun);
     // update the audit log
     this.saveProductionAudit(product, quantity);
@@ -458,7 +480,7 @@ public class Controller {
   }
 
   /**
-   * Enables all Tabs
+   * Enables all Tabs.
    */
   public void enable() {
     productTab.setDisable(false);
@@ -467,7 +489,7 @@ public class Controller {
   }
 
   /**
-   * Disables all but Tabs except the Employee Tab
+   * Disables all but Tabs except the Employee Tab.
    */
   public void disable() {
     productTab.setDisable(true);
@@ -476,7 +498,7 @@ public class Controller {
   }
 
   /**
-   * Removes the current employee and disables all but the Employee Tab
+   * Removes the current employee and disables all but the Employee Tab.
    */
   public void logout() {
     this.currentEmployee = null;
@@ -485,7 +507,7 @@ public class Controller {
 
   /**
    * Checks to see if the supplied username and password match the credentials of an employee in the
-   * list
+   * list.
    *
    * @param username The Employees account username
    * @param password The Employees account password
@@ -508,7 +530,7 @@ public class Controller {
 
   /**
    * Uses data from the username and password textfields to verify a user and switch to their
-   * 'account' This will logout the current user
+   * 'account' This will logout the current user.
    */
   @FXML
   public void login() {
@@ -538,7 +560,7 @@ public class Controller {
   }
 
   /**
-   * This will login an Employee and update the status text
+   * This will login an Employee and update the status text.
    *
    * @param employee The Employee to login
    */
@@ -549,7 +571,7 @@ public class Controller {
   }
 
   /**
-   * Creates an employee object using the data supplied in the gui Employee Tab
+   * Creates an employee object using the data supplied in the gui Employee Tab.
    */
   @FXML
   public void createEmployee() {
@@ -567,7 +589,8 @@ public class Controller {
 
     for (Employee e : this.employees) {
       if (e.getUsername().equals(employee.getUsername())) {
-        // i want to build a recursive function that will create a unique username instead of not creating an account
+        // i want to build a recursive function that will create a unique username
+        // instead of not creating an account
         // the function will add a count to the end of the username until a unique name is reached
         // Ex: jkenney2
         employeeStatus.setText("Could not create account. Username '" + employee.getUsername()
@@ -585,6 +608,9 @@ public class Controller {
     this.createPasswordText.clear();
   }
 
+  /**
+   * Week 7 issue 2 - demonstrate mulimedia.
+   */
   public static void testMultimedia() {
     AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
         "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");

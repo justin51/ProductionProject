@@ -1,22 +1,22 @@
 package product;
 
 /**
- * Class to store the information of a product
+ * Class to store the information of a product.
  *
  * @author Justin Kenney
  */
 public abstract class Product implements Item {
 
   /**
-   * id of the product
+   * id of the product.
    */
   private int id;
   /**
-   * type of the product
+   * type of the product.
    */
   private ItemType type;
   /**
-   * name of the product manufacturer
+   * name of the product manufacturer.
    */
   private String manufacturer;
   /**
@@ -25,11 +25,11 @@ public abstract class Product implements Item {
   private String name;
 
   /**
-   * Constructor for creating a Product object
+   * Constructor for creating a Product object.
    *
-   * @param name product name
+   * @param name         product name
    * @param manufacturer product manudacturer
-   * @param type item type
+   * @param type         item type
    */
   public Product(String name, String manufacturer, ItemType type) {
     this.id = -1;
@@ -39,12 +39,12 @@ public abstract class Product implements Item {
   }
 
   /**
-   * Constructor for creating a Product object
+   * Constructor for creating a Product object.
    *
-   * @param name product name
+   * @param name         product name
    * @param manufacturer product manufacturer
-   * @param type item type
-   * @param id product id
+   * @param type         item type
+   * @param id           product id
    */
   public Product(String name, String manufacturer, ItemType type, int id) {
     this.id = id;
@@ -54,7 +54,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * Creates a string made up of the products properties
+   * Creates a string made up of the products properties.
    *
    * @return product name, manufacturer, type
    */
@@ -65,7 +65,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * Gets the product id
+   * Gets the product id.
    *
    * @return product id
    */
@@ -75,7 +75,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * sets the product name
+   * sets the product name.
    *
    * @param name the products name
    */
@@ -85,7 +85,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * gets the products name
+   * gets the products name.
    *
    * @return products name
    */
@@ -95,7 +95,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * sets the manufacturers name
+   * sets the manufacturers name.
    *
    * @param name manufacturers name
    */
@@ -105,7 +105,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * gets the manufacturers name
+   * gets the manufacturers name.
    *
    * @return manufacturers name
    */
@@ -115,7 +115,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * get the item type
+   * get the item type.
    *
    * @return item type
    */
