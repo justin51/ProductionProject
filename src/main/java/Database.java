@@ -175,6 +175,11 @@ public class Database {
     }
   }
 
+  /**
+   * Prepares a sql statement and executes it on the database.
+   *
+   * @param sql
+   */
   void executeSqlStatement(String sql) {
     openConnection();
     try {
