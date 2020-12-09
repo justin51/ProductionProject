@@ -85,11 +85,19 @@ public class Database {
    * closes the connection to the database
    */
   public void closeConnection() {
-    try {
-      preparedStatement.close();
-      connection.close();
-    } catch (SQLException exception) {
-      exception.printStackTrace();
+    if(preparedStatement != null) {
+      try {
+        preparedStatement.close();
+      } catch (SQLException exception) {
+        exception.printStackTrace();
+      }
+    }
+    if(connection !=  null) {
+      try {
+        connection.close();
+      } catch (SQLException exception) {
+        exception.printStackTrace();
+      }
     }
   }
 
@@ -99,15 +107,10 @@ public class Database {
    * @param sql sql statement to be executed
    * @return ResultSet of the executed query
    */
-  public ResultSet getResultSet(String sql) {
+  public ResultSet getResultSet(String sql) throws SQLException {
     openConnection();
-    try {
-      preparedStatement = connection.prepareStatement(sql);
-      return preparedStatement.executeQuery();
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-    }
-    return null;
+    preparedStatement = connection.prepareStatement(sql);
+    return preparedStatement.executeQuery();
   }
 
   /**
@@ -132,8 +135,9 @@ public class Database {
       DBTablePrinter.printTable(connection, "PRODUCT");
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
+      closeConnection();
     }
-    closeConnection();
   }
 
   /**
@@ -158,10 +162,23 @@ public class Database {
       }
 
       DBTablePrinter.printTable(connection, "PRODUCT");
-    } catch (Exception e) {
+    } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      closeConnection();
     }
-    closeConnection();
+  }
+
+  void executeSQLStatement(String sql) {
+    openConnection();
+    try {
+      preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeConnection();
+    }
   }
 
   /**

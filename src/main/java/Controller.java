@@ -1,3 +1,4 @@
+import org.h2.jdbc.JdbcSQLSyntaxErrorException;
 import product.devices.AudioPlayer;
 import product.devices.MonitorType;
 import product.devices.MoviePlayer;
@@ -149,7 +150,7 @@ public class Controller {
     // Loads the Employees from EmployeeData.txt into the list
     this.loadEmployees();
 
-    testMultimedia();
+//    testMultimedia();
   }
 
   /**
@@ -275,7 +276,21 @@ public class Controller {
     this.productionLog = new ArrayList<>();
 
     // gets the resultset containing everything in the ProductionRecord Table
-    ResultSet productionSet = productionDB.getResultSet("SELECT * FROM Productionrecord");
+    ResultSet productionSet;
+
+    try {
+      productionSet = productionDB.getResultSet("SELECT * FROM Productionrecord");
+    } catch (SQLException e) {
+      System.out.println("Creating ProductionRecord table");
+      this.productionDB.executeSQLStatement("create table PRODUCTIONRECORD(production_num int auto_increment, product_id int, serial_num varchar, date_produced datetime)");
+      return;
+    }
+
+    if(productionSet == null) {
+      System.out.println("productionset is null?");
+      return;
+    }
+
     try {
       while (productionSet.next()) {
         int productionNum = productionSet.getInt(1);
@@ -287,22 +302,40 @@ public class Controller {
         ProductionRecord record = new ProductionRecord(productionNum, productId, serialNum, date);
         this.productionLog.add(record);
       }
-    } catch (SQLException e) {
+    }catch (SQLException e) {
       e.printStackTrace();
-    }
-    // update production log
-    showProduction();
+    } finally {
+      // update production log
+      showProduction();
 
-    // todo I think this can be handled in Database. I need to cache the result set?
-    // close the connection to the database
-    productionDB.closeConnection();
+      // todo I think this can be handled in Database. I need to use cached result set?
+      // close the connection to the database
+      productionDB.closeConnection();
+    }
   }
 
   /**
    * Loads Products from the Database into the productLine list
    */
   private void loadProductList() {
-    ResultSet productSet = productionDB.getResultSet("SELECT * FROM Product");
+
+    ResultSet productSet;
+
+    try {
+      productSet = productionDB.getResultSet("SELECT * FROM Product");
+    } catch (SQLException e) {
+      System.out.println("Creating Product table");
+      this.productionDB.executeSQLStatement("create table PRODUCT(id int auto_increment, name varchar, type varchar, manufacturer varchar)");
+      this.productionDB.executeSQLStatement("create unique index Product_id_uindex on Product (id)");
+      this.productionDB.executeSQLStatement("alter table Product add constraint Product_pk primary key (id)");
+      return;
+    }
+
+    if(productSet == null) {
+      System.out.println("product set is null?");
+      return;
+    }
+
     try {
       while (productSet.next()) {
         String mfr = productSet.getString(4);
@@ -313,12 +346,12 @@ public class Controller {
         // Create a Widget object to store the product data and add it to the list
         productLine.add(new Widget(name, mfr, ItemType.forName(type), id));
       }
-    } catch (SQLException e) {
+    }catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      // close the database connection
+      productionDB.closeConnection();
     }
-
-    // close the database connection
-    productionDB.closeConnection();
   }
 
   /**

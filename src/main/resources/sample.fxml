@@ -58,7 +58,7 @@
             </AnchorPane>
         </content>
       </Tab>
-    <Tab fx:id="productTab" disable="true" text="product.Product Line">
+    <Tab fx:id="productTab" disable="true" text="Product Line">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -73,15 +73,15 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="product.Product Name" />
+                        <Label text="Product Name" />
                         <Label text="Manufacturer" GridPane.rowIndex="1" />
-                        <Label text="product.Item Type" GridPane.rowIndex="2" />
+                        <Label text="Item Type" GridPane.rowIndex="2" />
                         <TextField fx:id="textProduct" GridPane.columnIndex="1" />
                         <TextField fx:id="textManufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <ChoiceBox fx:id="cbType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button layoutX="81.0" layoutY="185.0" mnemonicParsing="false" onAction="#addProduct" text="Add product.Product" />
+                  <Button layoutX="81.0" layoutY="185.0" mnemonicParsing="false" onAction="#addProduct" text="Product" />
                   <Label layoutX="256.0" layoutY="14.0" text="Existing Products" />
                   <TableView fx:id="productView" layoutX="256.0" layoutY="32.0" prefHeight="177.0" prefWidth="200.0">
                     <columns>
@@ -98,7 +98,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Choose product.Product" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Choose Product" />
                   <ListView fx:id="produceView" layoutX="14.0" layoutY="32.0" prefHeight="191.0" prefWidth="200.0" />
                   <Label layoutX="233.0" layoutY="14.0" text="Choose Quantity" />
                   <ComboBox fx:id="cbQuantity" layoutX="233.0" layoutY="32.0" prefWidth="150.0" />
