@@ -7,7 +7,6 @@ This project serves as a demonstration of object oriented programming skills acq
 
 ## Documentation
 https://github.com/justin51/ProductionProject/tree/master/docs
-I cant get github pages to work
 
 ## Diagrams
 
